@@ -2,7 +2,7 @@
     "$schema": "http://json.schemastore.org/template",
     "author": "Bugra Durukan",
     "classifications": [ "Common", "ASP.NET", "Web", "C#9" ],
-    "identity": "Boilerplate.Api",
+    "identity": "Boilerplate",
     "name": "ASP.NET Boilerplate",
     "shortName": "boilerplate",
     "sourceName": "Boilerplate",
