@@ -2,12 +2,12 @@
 
 ## Install
 ```
-dotnet new -i Boiler.Templates.CSharp
+dotnet new -i FiveLayered.Templates.CSharp
 ```
 
 ## Create a new project
 ```
-dotnet new boiler
+dotnet new boilerplate
 
 # You can also specify name and output directory using --name, --output
 dotnet new boiler --name <project-name> --output <output-directory>

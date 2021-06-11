@@ -1,12 +1,12 @@
-﻿using Boilerplate.Core.Helpers.Api;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Boilerplate.Core.Helpers.Api;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
-namespace Boilerplate.Business.Middlewares
+namespace Boilerplate.Business.Core
 {
     public class ErrorHandler
     {
@@ -50,10 +50,10 @@ namespace Boilerplate.Business.Middlewares
 
         private static Task HandleExceptionAsync(HttpContext context, ApiException exception, HttpStatusCode code)
         {
-            var resp = ApiReturn.ErrorResponse(exception.Error, (int)code);
+            var resp = ApiReturn.ErrorResponse(exception.Error, (int) code);
             var result = JsonConvert.SerializeObject(resp);
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
+            context.Response.StatusCode = (int) code;
             return context.Response.WriteAsync(result);
         }
     }

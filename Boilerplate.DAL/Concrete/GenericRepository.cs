@@ -1,8 +1,8 @@
-﻿using Boilerplate.DAL.Abstract;
+﻿using System;
+using System.Threading.Tasks;
+using Boilerplate.DAL.Abstract;
 using Boilerplate.DAL.Context;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace Boilerplate.DAL.Concrete
 {
@@ -18,6 +18,7 @@ namespace Boilerplate.DAL.Concrete
         }
 
         #region Create
+
         public async Task<bool> Create(T model)
         {
             await Context.Set<T>().AddAsync(model);
@@ -29,17 +30,21 @@ namespace Boilerplate.DAL.Concrete
             {
                 // ignored
             }
+
             return true;
         }
+
         #endregion
 
         #region Update
+
         public async Task<bool> Update(T model)
         {
             Context.Set<T>().Update(model);
             await Context.SaveChangesAsync();
             return true;
         }
+
         #endregion
     }
 }

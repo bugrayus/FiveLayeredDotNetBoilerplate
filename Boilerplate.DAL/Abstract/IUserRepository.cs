@@ -1,6 +1,6 @@
-﻿using Boilerplate.Entity.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Boilerplate.Entity.Models;
 
 namespace Boilerplate.DAL.Abstract
 {

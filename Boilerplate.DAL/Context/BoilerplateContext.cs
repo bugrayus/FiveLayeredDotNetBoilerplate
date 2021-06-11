@@ -1,12 +1,12 @@
-﻿using Boilerplate.Entity.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Boilerplate.Entity.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Boilerplate.DAL.Context
 {
@@ -41,16 +41,19 @@ namespace Boilerplate.DAL.Context
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
-            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseModel && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var entities = ChangeTracker.Entries().Where(x =>
+                x.Entity is BaseModel && (x.State == EntityState.Added || x.State == EntityState.Modified));
             foreach (var entity in entities)
             {
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseModel)entity.Entity).CreatedDate = DateTime.UtcNow;
-                    ((BaseModel)entity.Entity).IsActive = true;
+                    ((BaseModel) entity.Entity).CreatedDate = DateTime.UtcNow;
+                    ((BaseModel) entity.Entity).IsActive = true;
                 }
-                ((BaseModel)entity.Entity).UpdatedAt = DateTime.UtcNow;
+
+                ((BaseModel) entity.Entity).UpdatedAt = DateTime.UtcNow;
             }
+
             return base.SaveChangesAsync(cancellationToken);
         }
     }

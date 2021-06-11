@@ -1,6 +1,6 @@
-﻿using Boilerplate.Entity.RequestModels.User;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
+using Boilerplate.Entity.RequestModels.User;
 
 namespace Boilerplate.Entity.Models
 {
@@ -22,9 +22,9 @@ namespace Boilerplate.Entity.Models
         public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        [JsonIgnore]
-        public string HashedPassword { get; set; }
-        [JsonIgnore]
-        public string Salt { get; set; }
+
+        [JsonIgnore] public string HashedPassword { get; set; }
+
+        [JsonIgnore] public string Salt { get; set; }
     }
 }

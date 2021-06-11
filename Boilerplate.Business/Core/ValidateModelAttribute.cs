@@ -1,9 +1,9 @@
-﻿using Boilerplate.Core.Helpers.Api;
+﻿using System.Linq;
+using Boilerplate.Core.Helpers.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Linq;
 
-namespace Boilerplate.Business.Utilities
+namespace Boilerplate.Business.Core
 {
     public class ValidateModelAttribute : ActionFilterAttribute
     {
@@ -25,6 +25,7 @@ namespace Boilerplate.Business.Utilities
                     Errors = errors.SelectMany(s => s.Errors).ToList() //same
                 });
             }
+
             base.OnActionExecuting(context);
         }
     }

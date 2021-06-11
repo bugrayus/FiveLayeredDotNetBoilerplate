@@ -36,6 +36,7 @@ namespace Boilerplate.Controllers
                 Data = data
             });
         }
+
         [NonAction]
         protected IActionResult Created<T>(ApiResponse<T> data)
         {
@@ -45,7 +46,7 @@ namespace Boilerplate.Controllers
         [NonAction]
         protected IActionResult NoContent<T>(string message, string internalMessage, T data)
         {
-            return NoContent<T>(new ApiResponse<T>
+            return NoContent(new ApiResponse<T>
             {
                 Success = true,
                 Message = message,
@@ -62,7 +63,7 @@ namespace Boilerplate.Controllers
 
         protected IActionResult BadRequest<T>(string message, string internalMessage, T data)
         {
-            return BadRequest<T>(new ApiResponse<T>
+            return BadRequest(new ApiResponse<T>
             {
                 Success = true,
                 Message = message,

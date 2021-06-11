@@ -1,9 +1,9 @@
+using System;
+using System.Text;
 using Boilerplate.Business.Abstract;
 using Boilerplate.Business.Concrete;
-using Boilerplate.Business.Middlewares;
-using Boilerplate.Business.Utilities;
+using Boilerplate.Business.Core;
 using Boilerplate.Core.Helpers;
-using Boilerplate.Core.Helpers.Generators;
 using Boilerplate.DAL.Abstract;
 using Boilerplate.DAL.Concrete;
 using Boilerplate.DAL.Context;
@@ -19,7 +19,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Text;
 
 namespace Boilerplate
 {
@@ -63,10 +62,7 @@ namespace Boilerplate
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsAll,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                    });
+                    builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
             });
 
             services.AddControllers();
@@ -76,10 +72,10 @@ namespace Boilerplate
             services.AddDataProtection();
 
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(x =>
                 {
                     x.RequireHttpsMetadata = false;
@@ -90,7 +86,7 @@ namespace Boilerplate
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateAudience = false
                         //ClockSkew = TimeSpan.FromMinutes(30)
                     };
                 });
@@ -111,14 +107,15 @@ namespace Boilerplate
                     }
                 });
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then user token in the text input below.\r\n\r\n Bearer yazýp boþluktan sonra tokeni giriniz\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then user token in the text input below.\r\n\r\n Bearer yazýp boþluktan sonra tokeni giriniz\r\n\r\nExample: \"Bearer 12345abcdef\""
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -132,7 +129,7 @@ namespace Boilerplate
                                 Id = "Bearer"
                             }
                         },
-                        System.Array.Empty<string>()
+                        Array.Empty<string>()
                     }
                 });
             });
@@ -140,10 +137,7 @@ namespace Boilerplate
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             var provider = new FileExtensionContentTypeProvider();
             // Add new mappings
             provider.Mappings[".obj"] = "application/octet-stream";
@@ -173,10 +167,7 @@ namespace Boilerplate
 
             app.UseMiddleware<Jwt>();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

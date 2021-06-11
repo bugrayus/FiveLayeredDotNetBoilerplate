@@ -9,7 +9,7 @@ namespace Boilerplate.Core.Helpers.Api
         public double ResponseTime { get; set; }
         public DateTime UtcTimestamp { get; set; } = DateTime.UtcNow;
         public object Data { get; set; }
-        public bool IsErrorOccured { get; set; } = false;
+        public bool IsErrorOccured { get; set; }
         public Error Error { get; set; }
 
         public bool ShouldSerializeError()
@@ -24,7 +24,7 @@ namespace Boilerplate.Core.Helpers.Api
 
         public static ApiReturn ErrorResponse(Error error, int statusCode)
         {
-            return new ApiReturn
+            return new()
             {
                 Error = error,
                 IsErrorOccured = true,

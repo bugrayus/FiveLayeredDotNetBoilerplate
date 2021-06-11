@@ -1,8 +1,8 @@
-﻿using Boilerplate.Entity.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Boilerplate.Entity.Models;
 using Boilerplate.Entity.RequestModels.User;
 using Boilerplate.Entity.ResponseModels.User;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Boilerplate.Business.Abstract
 {

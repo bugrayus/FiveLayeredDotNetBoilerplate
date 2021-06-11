@@ -1,20 +1,20 @@
-﻿using Boilerplate.Business.Abstract;
-using Boilerplate.Core.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Boilerplate.Business.Abstract;
+using Boilerplate.Core.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Boilerplate.Business.Middlewares
+namespace Boilerplate.Business.Core
 {
     public class Jwt
     {
-        private readonly RequestDelegate _next;
         private readonly AppSettings _appSettings;
+        private readonly RequestDelegate _next;
 
         public Jwt(RequestDelegate next, IOptions<AppSettings> appSettings)
         {
@@ -25,10 +25,7 @@ namespace Boilerplate.Business.Middlewares
         public async Task Invoke(HttpContext context, IUserService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            if (token != null)
-            {
-                await AttachUserToContext(context, userService, token);
-            }
+            if (token != null) await AttachUserToContext(context, userService, token);
 
             await _next(context);
         }
@@ -47,7 +44,7 @@ namespace Boilerplate.Business.Middlewares
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 }, out var validatedToken);
-                var jwtToken = (JwtSecurityToken)validatedToken;
+                var jwtToken = (JwtSecurityToken) validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "nameid").Value);
                 context.Items["User"] = await userService.GetById(userId);
             }

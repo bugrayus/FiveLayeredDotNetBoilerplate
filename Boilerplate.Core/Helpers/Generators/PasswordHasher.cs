@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System;
+﻿using System;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Boilerplate.Core.Helpers.Generators
 {
@@ -20,11 +20,11 @@ namespace Boilerplate.Core.Helpers.Generators
             }
 
             var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
+                password,
+                salt,
+                KeyDerivationPrf.HMACSHA1,
+                10000,
+                256 / 8));
             return new Tuple<string, string>(Convert.ToBase64String(salt), hashed);
         }
     }
