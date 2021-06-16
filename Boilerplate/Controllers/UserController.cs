@@ -78,14 +78,5 @@ namespace Boilerplate.Controllers
         }
 
         #endregion
-
-        //#region Change Password
-        //[HttpPost]
-        //[Route("Login")]
-        //public async Task<IActionResult> ChangePassword()
-        //{
-
-        //}
-        //#endregion
     }
 }
